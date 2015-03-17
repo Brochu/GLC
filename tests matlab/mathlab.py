@@ -10,7 +10,7 @@ def nextpow2(n):
 	nextexp = num.ceil(exp2)
 	return nextexp
 
-sampleRate, signal = wav.read('440_sine.wav')
+sampleRate, signal = wav.read('accord.wav')
 
 Fs = 44100
 T = 1.0/Fs
