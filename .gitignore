@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.py~
 *.py.swp
+*.py.swo
 *.*~
 
 # C extensions
