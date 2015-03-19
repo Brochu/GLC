@@ -2,6 +2,7 @@ import numpy as num
 import pylab
 import matplotlib.pyplot as plt
 import scipy.io.wavfile as wav
+import math
 
 from scipy import fft, arange
 
@@ -41,11 +42,19 @@ def findFreq(x, y):
 	threshold = 0.85 # Verifier si il y a un meilleur threashold
 	thresholdVal = num.max(y) * threshold
 	idx = num.where(y >= thresholdVal)
-	print x[idx]
-	return 440;
+	return x[idx]
+
+def findNote(freqList):
+    a = 2 ** (1.0 / 12.0)
+    f0 = 440.0
+    fn = freqList / f0
+    notes = num.log(fn) / num.log(a)
+    notes = num.round(notes)
+    print notes
 
 # Read sound file
 sampleRate, signal = wav.read('accord.wav')
 # get frequencies in signal
 x, y = getfftinfo(signal, False)
-print findFreq(x, y)
+freq = findFreq(x, y)
+findNote(freq)
