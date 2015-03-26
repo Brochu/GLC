@@ -24,23 +24,26 @@ class streamHandler:
         self.outputGen = outputGen
         self._maxPrint = 100
         self._currentPrint = 0
+        self.kkfini = False
     
     def _getCallback(self):
         def _streamCallback(in_data, frame_count, time_info, status):
             if self._currentPrint < self._maxPrint:
                 self._currentPrint += 1
                 print in_data
+            else
+                self.kkfini = True
             return (None, pyaudio.paContinue)
         return _streamCallback
     
     def start(self):
         self._pa = pyaudio.PyAudio()
-        self.stream = self._pa.open(format = p.get_format_from_width(self.streaminfo.width),
+        self.stream = self._pa.open(format = self._pa.get_format_from_width(self.streaminfo.width),
                                     channels = self.streaminfo.channels,
                                     rate = self.streaminfo.rate,
                                     input = True,
                                     input_device_index = self.streaminfo.deviceIndex,
-                                    stream_callback = _getCallback())
+                                    stream_callback = self._getCallback())
     
     def stop(self):
         self.stream.stop_stream()
@@ -49,3 +52,6 @@ class streamHandler:
         
 sh = streamHandler(None, None)
 sh.start()
+while not sh.kkfini:
+    pass
+sh.stop()
