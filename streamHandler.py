@@ -1,17 +1,20 @@
 import pyaudio
 import time
+import struct
 
-DEFAULT_WIDTH = 2 # Nombre de byte par sample
-DEFAULT_CHANNELS = 2
+DEFAULT_WIDTH = 4 # Nombre de byte par sample
+DEFAULT_CHANNELS = 1
 DEFAULT_RATE = 44100
 DEFAULT_DEVICE_INDEX = 0
+DEFAULT_FRAMES_PER_BUFFER = 1
 
 class streamInfo:
-    def __init__(self, width = DEFAULT_WIDTH, channels = DEFAULT_CHANNELS, rate = DEFAULT_RATE, deviceIndex = DEFAULT_DEVICE_INDEX):
+    def __init__(self, width = DEFAULT_WIDTH, channels = DEFAULT_CHANNELS, rate = DEFAULT_RATE, deviceIndex = DEFAULT_DEVICE_INDEX, framesPerBuffer = DEFAULT_FRAMES_PER_BUFFER):
         self.width = width
         self.channels = channels
         self.rate = rate
         self.deviceIndex = deviceIndex
+        self.framesPerBuffer = framesPerBuffer
 
 class streamHandler:
     def __init__(self, func, outputGen, streaminfo = None):
@@ -22,7 +25,7 @@ class streamHandler:
             
         self.func = func
         self.outputGen = outputGen
-        self._maxPrint = 100
+        self._maxPrint = 500
         self._currentPrint = 0
         self.kkfini = False
     
@@ -30,8 +33,11 @@ class streamHandler:
         def _streamCallback(in_data, frame_count, time_info, status):
             if self._currentPrint < self._maxPrint:
                 self._currentPrint += 1
-                print in_data
-            else
+                data = struct.unpack('f', in_data)
+                print "{0}: {1} frames using {2} bytes".format(time_info, frame_count, len(in_data))
+                print data
+                print ""
+            else:
                 self.kkfini = True
             return (None, pyaudio.paContinue)
         return _streamCallback
@@ -43,11 +49,12 @@ class streamHandler:
                                     rate = self.streaminfo.rate,
                                     input = True,
                                     input_device_index = self.streaminfo.deviceIndex,
+                                    frames_per_buffer = self.streaminfo.framesPerBuffer,
                                     stream_callback = self._getCallback())
     
     def stop(self):
         self.stream.stop_stream()
-        stream.close()
+        self.stream.close()
         self._pa.terminate()
         
 sh = streamHandler(None, None)
