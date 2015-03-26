@@ -2,11 +2,13 @@ import pyaudio
 import time
 import struct
 
+CUTOFF_THRESHOLD = 0.001
+
 DEFAULT_WIDTH = 4 # Nombre de byte par sample
 DEFAULT_CHANNELS = 1
 DEFAULT_RATE = 44100
 DEFAULT_DEVICE_INDEX = 0
-DEFAULT_FRAMES_PER_BUFFER = 1
+DEFAULT_FRAMES_PER_BUFFER = 128
 
 class streamInfo:
     def __init__(self, width = DEFAULT_WIDTH, channels = DEFAULT_CHANNELS, rate = DEFAULT_RATE, deviceIndex = DEFAULT_DEVICE_INDEX, framesPerBuffer = DEFAULT_FRAMES_PER_BUFFER):
@@ -25,7 +27,7 @@ class streamHandler:
             
         self.func = func
         self.outputGen = outputGen
-        self._maxPrint = 500
+        self._maxPrint = 100
         self._currentPrint = 0
         self.kkfini = False
     
@@ -33,7 +35,12 @@ class streamHandler:
         def _streamCallback(in_data, frame_count, time_info, status):
             if self._currentPrint < self._maxPrint:
                 self._currentPrint += 1
-                data = struct.unpack('f', in_data)
+                data = []
+                
+                for i in range(frame_count):
+                    temp = struct.unpack('f', in_data[0 : 4])
+                    data.append(temp[0] if temp[0] > CUTOFF_THRESHOLD else 0.0)
+                    
                 print "{0}: {1} frames using {2} bytes".format(time_info, frame_count, len(in_data))
                 print data
                 print ""
