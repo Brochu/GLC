@@ -14,7 +14,7 @@ class streamInfo:
         self.deviceIndex = deviceIndex
 
 class streamHandler:
-    def __init__(_self, func, outputGen, streaminfo = None):
+    def __init__(self, func, outputGen, streaminfo = None):
         if streaminfo == None:
             self.streaminfo = streamInfo()
         else:
@@ -46,3 +46,6 @@ class streamHandler:
         self.stream.stop_stream()
         stream.close()
         self._pa.terminate()
+        
+sh = streamHandler(None, None)
+sh.start()
