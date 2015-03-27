@@ -8,7 +8,7 @@ DEFAULT_WIDTH = 4 # Nombre de byte par sample
 DEFAULT_CHANNELS = 1
 DEFAULT_RATE = 44100
 DEFAULT_DEVICE_INDEX = 0
-DEFAULT_FRAMES_PER_BUFFER = 128
+DEFAULT_FRAMES_PER_BUFFER = 1024
 
 class streamInfo:
     def __init__(self, width = DEFAULT_WIDTH, channels = DEFAULT_CHANNELS, rate = DEFAULT_RATE, deviceIndex = DEFAULT_DEVICE_INDEX, framesPerBuffer = DEFAULT_FRAMES_PER_BUFFER):
@@ -19,7 +19,7 @@ class streamInfo:
         self.framesPerBuffer = framesPerBuffer
 
 class streamHandler:
-    def __init__(self, func, outputGen, streaminfo = None):
+    def __init__(self, func = None, outputGen = None, streaminfo = None):
         if streaminfo == None:
             self.streaminfo = streamInfo()
         else:
@@ -38,7 +38,8 @@ class streamHandler:
                 data = []
                 
                 for i in range(frame_count):
-                    temp = struct.unpack('f', in_data[i*4 : i*4+4])
+                    width = self.streaminfo.width
+                    temp = struct.unpack('f', in_data[i*width : i*width + width])
                     data.append(temp[0] if temp[0] > CUTOFF_THRESHOLD else 0.0)
                     
                 print "{0}: {1} frames using {2} bytes".format(time_info, frame_count, len(in_data))
@@ -64,8 +65,9 @@ class streamHandler:
         self.stream.close()
         self._pa.terminate()
         
-sh = streamHandler(None, None)
-sh.start()
-while not sh.kkfini:
-    pass
-sh.stop()
+if __name__ == "__main__":
+    sh = streamHandler(None, None)
+    sh.start()
+    while not sh.kkfini:
+        pass
+    sh.stop()
