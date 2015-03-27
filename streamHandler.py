@@ -38,7 +38,7 @@ class streamHandler:
                 data = []
                 
                 for i in range(frame_count):
-                    temp = struct.unpack('f', in_data[0 : 4])
+                    temp = struct.unpack('f', in_data[i*4 : i*4+4])
                     data.append(temp[0] if temp[0] > CUTOFF_THRESHOLD else 0.0)
                     
                 print "{0}: {1} frames using {2} bytes".format(time_info, frame_count, len(in_data))
