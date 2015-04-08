@@ -1,10 +1,11 @@
 import pyaudio
 import time
+import numpy
 import struct
 
-CUTOFF_THRESHOLD = 0.001
+#CUTOFF_THRESHOLD = 0.001
 
-DEFAULT_WIDTH = 4 # Nombre de byte par sample
+#DEFAULT_WIDTH = 4 # Nombre de byte par sample
 DEFAULT_CHANNELS = 1
 DEFAULT_RATE = 44100
 DEFAULT_DEVICE_INDEX = 0
@@ -37,10 +38,12 @@ class streamHandler:
                 self._currentPrint += 1
                 data = []
                 
+                data = numpy.fromstring(in_data, dtype=numpy.int16).tolist()
+                """
                 for i in range(frame_count):
                     width = self.streaminfo.width
-                    temp = struct.unpack('f', in_data[i*width : i*width + width])
-                    data.append(temp[0] if temp[0] > CUTOFF_THRESHOLD else 0.0)
+                    temp = struct.unpack('h', '\x00' * (2 - width) + in_data[i*width : i*width + width])
+                    data.append(temp[0] if temp[0] > CUTOFF_THRESHOLD else temp[0])"""
                     
                 print "{0}: {1} frames using {2} bytes".format(time_info, frame_count, len(in_data))
                 print data
@@ -52,7 +55,7 @@ class streamHandler:
     
     def start(self):
         self._pa = pyaudio.PyAudio()
-        self.stream = self._pa.open(format = self._pa.get_format_from_width(self.streaminfo.width),
+        self.stream = self._pa.open(format = pyaudio.paInt16,
                                     channels = self.streaminfo.channels,
                                     rate = self.streaminfo.rate,
                                     input = True,

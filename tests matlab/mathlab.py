@@ -54,6 +54,7 @@ def findNote(freqList):
 
 # Read sound file
 sampleRate, signal = wav.read('c.wav')
+print type(signal.tolist()[0])
 # get frequencies in signal
 x, y = getfftinfo(signal, False)
 freq = findFreq(x, y)

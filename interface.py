@@ -26,7 +26,12 @@ for i in range(deviceCount):
 pa.terminate()
 
 sys.stdout.write('\nCHOOSE YOUR DESTINY: ')
-chosenDeviceIndex = input()
+chosenDeviceIndex = raw_input()
+
+if chosenDeviceIndex.upper() == "EXIT":
+    exit()
+    
+chosenDeviceIndex = int(chosenDeviceIndex)
 
 if not chosenDeviceIndex in validDevices:
     raise IOError("Invalid input device")
