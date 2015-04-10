@@ -52,7 +52,7 @@ def findFreq(x, y):
         #print "=======\ntemp: {0}\ncrotte: {1}\ny[crotte]: {2} <? {3}\ntemp[crotte]: {4}\n=======".format(temp, crotte, y[crotte], min_threshold, num.where(temp != crotte)[0])
         if y[crotte] < min_threshold:
             temp = num.where(temp != crotte)[0]
-    
+
     if len(temp) <= 0:
         return None
     else:
@@ -66,11 +66,16 @@ def findNote(freqList):
     notes = num.round(notes)
     return notes
 
+def convertToLetterNote(note):
+    letters = ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"]
+    return letters[note % 12]
+
 if __name__ == '__main__':
     # Read sound file
-    sampleRate, signal = wav.read(sys.argv[1])
+    #sampleRate, signal = wav.read(sys.argv[1])
     # get frequencies in signal
-    x, y = getfftinfo(signal, bool(sys.argv[2]))
-    freq = findFreq(x, y)
-    print freq
-    print findNote(freq)
+    #x, y = getfftinfo(signal, bool(sys.argv[2]))
+    #freq = findFreq(x, y)
+    #print freq
+    #print findNote(freq)
+    print convertToLetterNote(-8)
