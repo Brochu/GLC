@@ -7,7 +7,7 @@ import math
 
 from scipy import fft, arange
 
-THRESHOLD = 0.85
+THRESHOLD = 0.95
 
 def nextpow2(n):
     exp2 = num.log2(n)
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     # Read sound file
     sampleRate, signal = wav.read(sys.argv[1])
     # get frequencies in signal
-    x, y = getfftinfo(signal, False)
+    x, y = getfftinfo(signal, bool(sys.argv[2]))
     freq = findFreq(x, y)
     print freq
     print findNote(freq)
