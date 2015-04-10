@@ -67,6 +67,10 @@ def findNote(freqList):
     return notes
 
 def convertToLetterNote(note):
+    if note == float("-inf") or note == float("inf"):
+        return None
+        
+    note = int(note)
     letters = ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"]
     return letters[note % 12]
 

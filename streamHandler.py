@@ -53,7 +53,15 @@ class streamHandler:
 
                 x, y = getfftinfo(data, False)
                 freqlst = findFreq(x, y)
-                print freqlst
+                if freqlst != None:
+                    notelst = findNote(freqlst)
+                    for note in notelst:
+                        print convertToLetterNote(note)
+                #if freqlst != None:
+                #    a = findNote(freqlst)
+                #    print a
+                #    for c in a:
+                #       print convertToLetterNote(int(c))
             else:
                 self.kkfini = True
             return (None, pyaudio.paContinue)
