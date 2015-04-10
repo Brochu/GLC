@@ -11,7 +11,7 @@ from mathlab import *
 DEFAULT_CHANNELS = 1
 DEFAULT_RATE = 44100
 DEFAULT_DEVICE_INDEX = 0
-DEFAULT_FRAMES_PER_BUFFER = 1024
+DEFAULT_FRAMES_PER_BUFFER = 2048
 
 class streamInfo:
     def __init__(self, width = 4, channels = DEFAULT_CHANNELS, rate = DEFAULT_RATE, deviceIndex = DEFAULT_DEVICE_INDEX, framesPerBuffer = DEFAULT_FRAMES_PER_BUFFER):
