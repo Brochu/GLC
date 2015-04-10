@@ -3,6 +3,8 @@ import time
 import numpy
 import struct
 
+from mathlab import *
+
 #CUTOFF_THRESHOLD = 0.001
 
 #DEFAULT_WIDTH = 4 # Nombre de byte par sample
@@ -45,9 +47,13 @@ class streamHandler:
                     temp = struct.unpack('h', '\x00' * (2 - width) + in_data[i*width : i*width + width])
                     data.append(temp[0] if temp[0] > CUTOFF_THRESHOLD else temp[0])"""
 
-                print "{0}: {1} frames using {2} bytes".format(time_info, frame_count, len(in_data))
-                print data
-                print ""
+                #print "{0}: {1} frames using {2} bytes".format(time_info, frame_count, len(in_data))
+                #print data
+                #print ""
+
+                x, y = getfftinfo(data, False)
+                freqlst = findFreq(x, y)
+                print freqlst
             else:
                 self.kkfini = True
             return (None, pyaudio.paContinue)
