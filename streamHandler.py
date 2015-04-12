@@ -1,3 +1,8 @@
+# streamHandler.py
+#------------------------
+# Handles audio inputs. Right now it only handles live input, but we should add a file input.
+# THAT would be cool!
+
 import pyaudio
 import time
 import numpy

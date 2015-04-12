@@ -1,3 +1,7 @@
+# mathlab.py
+#------------------------
+# Utility functions ported from Mathlab tests for the better part
+
 import sys
 import numpy as num
 import pylab
@@ -67,7 +71,7 @@ def findNote(freqList):
     return notes
 
 def convertToLetterNote(note):
-    if note == float("-inf") or note == float("inf"):
+    if note == float("-inf") or note == float("inf") or note == None:
         return None
         
     note = int(note)

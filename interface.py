@@ -1,3 +1,7 @@
+# interface.py
+#------------------------
+# Basic command line interface which works, but laid en tabarnak
+
 from streamHandler import *
 import pyaudio
 import itertools
