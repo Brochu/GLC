@@ -2,10 +2,11 @@
 #------------------------
 # Basic command line interface which works, but laid en tabarnak
 
-from streamHandler import *
 import pyaudio
 import itertools
 import sys
+
+from streamHandler import *
 
 def hacklol(kk):
     if ord(kk) >= 128:

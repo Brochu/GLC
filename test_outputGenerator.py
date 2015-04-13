@@ -4,6 +4,10 @@
 
 import outputGenerator
 import mathlab
+import sys
+import io
+
+from tabTranslator import tabTranslator
 
 NOTES = [(-1, 1), (0, 1), (1, 1), (2, 1), (3, 1), (None, None), (5, 1)]
 
@@ -14,15 +18,25 @@ def translateBaseNotes(notes):
     
     return res
 
-def testSimpleTranslator(notes):
+def testSimpleTranslator(notes, outStream):
     """simpleTranslator test"""
-    print "================\nTesting simpleTranslator...\n================\n"
-    outGen = outputGenerator.outputGenerator()
+    outStream.write(u"\n================\nTesting simpleTranslator...\n================\n")
+    outGen = outputGenerator.outputGenerator(outputStream = outStream)
     outGen.translate(notes)
-    print ""
+
+def testTabTranslator(notes, outStream):
+    """tabTranslator test"""
+    outStream.write(u"\n================\nTesting tabTranslator...\n================\n")
+    outGen = outputGenerator.outputGenerator(translator = tabTranslator(), outputStream = outStream)
+    outGen.translate(notes)
 
 if __name__ == "__main__":
-    print "\n================\nNotes used for tests:\n\t{0}\n\t{1}\n================\n".format(NOTES, translateBaseNotes(NOTES))
-    
-    testSimpleTranslator(NOTES)
-    print "================\nEND OF TESTS\n================"
+    outStream = sys.stdout
+
+    if len(sys.argv) > 1:
+        outStream = io.open(sys.argv[1], 'w')
+        
+    print "\n================\nNotes used for tests:\n\t{0}\n\t{1}\n\nOutput is streamed into {2}\n================".format(NOTES, translateBaseNotes(NOTES), outStream.name)
+    testSimpleTranslator(NOTES, outStream)
+    testTabTranslator(NOTES, outStream)
+    print "\n================\nEND OF TESTS\n================"

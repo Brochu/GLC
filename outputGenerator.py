@@ -1,10 +1,10 @@
 # outputGenerator.py
 # --------------------------
 # Translates some notes with a translator (default: simpleTranslator) and outputs them in a stream (default: stdout)
-# TODO: Systeme de commandes pour dire au translator que c'est fini et de vider son buffer
+
+import sys
 
 from simpleTranslator import simpleTranslator
-import sys
 
 class outputGenerator:
     def __init__(self, translator = simpleTranslator(), outputStream = sys.stdout):
@@ -16,11 +16,13 @@ class outputGenerator:
         for n in notes:
             if n[0] == None:
                 buffer = self.translator.flush()
+                self.outputStream.write(unicode(buffer))
+                self.outputStream.flush()
                 break
             else:
                 buffer = self.translator.translate(n)
             
             if buffer:
-                self.outputStream.write(buffer)
+                self.outputStream.write(unicode(buffer))
                 self.outputStream.flush()
                 

@@ -4,8 +4,9 @@
 # Uses mathlab.py convertToLetterNote() to translates notes to letter.
 # Has a buffer of 1 note
 
-from baseTranslator import baseTranslator
 import mathlab
+
+from baseTranslator import baseTranslator
 
 BUFFER_LENGTH = 1
 END_CHAR = '\n'

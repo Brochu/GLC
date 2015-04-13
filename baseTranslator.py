@@ -25,10 +25,16 @@ class baseTranslator:
             return None
     
     def flush(self):
+        self._flush()
+        
         self.buffer += self.endChar
         temp = self.buffer
         self.buffer = ''
+        self.bufferSize = 0
         return temp
         
     def _translate(self, notes):
+        pass
+    
+    def _flush(self):
         pass
