@@ -75,7 +75,7 @@ def convertToLetterNote(note):
     if note == float("-inf") or note == float("inf") or note == None:
         return None
         
-    note = int(note)
+    note = int(note-1)
     letters = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
     return letters[note % 12]
 
