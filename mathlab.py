@@ -74,7 +74,7 @@ def findNotes(freqList):
 def convertToLetterNote(note):
     if note == float("-inf") or note == float("inf") or note == None:
         return None
-        
+
     note = int(note-1)
     letters = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
     return letters[note % 12]
@@ -82,36 +82,35 @@ def convertToLetterNote(note):
 def fonctionReconnaissance(data):
     x, y = getfftinfo(data, False)
     freqlst = findFreq(x, y)
-    
+
     if freqlst != None:
         notes = findNotes(freqlst)
         octaves = []
         res = []
-        
+
         for n in notes:
             oc = 0
-            
+
             if n < 0:
                 oc = int((n - 3.0) / 12.0) + 4
             else:
                 oc = int((n + 9.0) / 12.0) + 4
-            
+
             noteres = (int(n) + 10 % 12)
             if noteres == 0:
                 noteres = 12
-                
+
             res.append((noteres, oc))
-        
+
         return res
     else:
         return None
 
 if __name__ == '__main__':
     # Read sound file
-    #sampleRate, signal = wav.read(sys.argv[1])
+    sampleRate, signal = wav.read(sys.argv[1])
     # get frequencies in signal
-    #x, y = getfftinfo(signal, bool(sys.argv[2]))
-    #freq = findFreq(x, y)
-    #print freq
-    #print findNote(freq)
-    print convertToLetterNote(-8)
+    x, y = getfftinfo(signal, bool(sys.argv[2]))
+    freq = findFreq(x, y)
+    print freq
+    print findNotes(freq)
