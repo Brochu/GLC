@@ -14,7 +14,6 @@ class outputGenerator:
     def translate(self, notes):
         """Notes should be tuples (Interval, Octave) in a list"""
         for n in notes:
-            print n
             if n[0] == None:
                 buffer = self.translator.flush()
                 self.outputStream.write(unicode(buffer))

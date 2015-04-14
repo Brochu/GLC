@@ -60,7 +60,8 @@ class liveStreamHandler(baseStreamHandler):
         self._pa.terminate()
 
 if __name__ == "__main__":
-    sh = liveStreamHandler(outputGen = outputGenerator(outputStream = io.open("yotest.txt", 'w')))
+    #sh = liveStreamHandler(outputGen = outputGenerator(outputStream = io.open("yotest.txt", 'w')))
+    sh = liveStreamHandler()
     sh.start()
     print('Press ENTER to stop recording... '),
     nothing = raw_input()

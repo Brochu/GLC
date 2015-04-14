@@ -85,7 +85,6 @@ def fonctionReconnaissance(data):
     
     if freqlst != None:
         notes = findNotes(freqlst)
-        print "FreqList: {0}\nNotes: {1}".format(freqlst, notes)
         octaves = []
         res = []
         
@@ -103,7 +102,6 @@ def fonctionReconnaissance(data):
                 
             res.append((noteres, oc))
         
-        print "Result: {0}\n".format(res)
         return res
     else:
         return None

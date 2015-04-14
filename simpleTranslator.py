@@ -16,5 +16,5 @@ class simpleTranslator(baseTranslator):
         baseTranslator.__init__(self, BUFFER_LENGTH, END_CHAR)
     
     def _translate(self, notes):
-        self.buffer += mathlab.convertToLetterNote(notes[0])
+        self.buffer += mathlab.convertToLetterNote(notes[0]) + " " + str(notes[1])
         self.bufferSize += 1
