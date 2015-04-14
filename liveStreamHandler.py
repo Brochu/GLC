@@ -39,7 +39,7 @@ class liveStreamHandler(baseStreamHandler):
             data = numpy.fromstring(in_data, dtype=numpy.int16).tolist()
             noteData = self.func(data)
             
-            self._callBackProcessing(noteData)
+            self._callbackProcessing(noteData)
             
             return (None, pyaudio.paContinue)
         return _streamCallback
@@ -60,9 +60,9 @@ class liveStreamHandler(baseStreamHandler):
         self._pa.terminate()
 
 if __name__ == "__main__":
-    #sh = liveStreamHandler(outputGen = outputGenerator(outputStream = io.open("yotest.txt", 'w')))
-    sh = liveStreamHandler()
+    sh = liveStreamHandler(outputGen = outputGenerator(outputStream = io.open("yotest.txt", 'w')))
+    #sh = liveStreamHandler()
     sh.start()
-    print('Press ENTER to stop recording... '),
+    print('Press ENTER to stop recording... ')
     nothing = raw_input()
     sh.stop()

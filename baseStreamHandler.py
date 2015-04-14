@@ -23,10 +23,10 @@ class baseStreamHandler:
             data = numpy.fromstring(in_data, dtype=self.dataType).tolist()
             noteData = self.func(data)
             
-            return _callBackProcessing(noteData)
+            return self._callbackProcessing(noteData)
         return _streamCallback
     
-    def _callBackProcessing(self, data):
+    def _callbackProcessing(self, data):
         self.outputGen.translate(data)
         return None
 
