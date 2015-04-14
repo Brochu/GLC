@@ -21,13 +21,14 @@ class baseStreamHandler:
         def _streamCallback(in_data):
             data = []
             data = numpy.fromstring(in_data, dtype=self.dataType).tolist()
-            noteData = func(data)
+            noteData = self.func(data)
             
             return _callBackProcessing(noteData)
         return _streamCallback
     
     def _callBackProcessing(self, data):
         self.outputGen.translate(data)
+        return None
 
     def start(self):
         pass

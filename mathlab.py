@@ -62,10 +62,11 @@ def findFreq(x, y):
     else:
         return x[temp]
 
-def findNote(freqList):
+def findNotes(freqList):
+    freqListFiltered = freqList[num.where(freqList > 1.0)]
     a = 2.0 ** (1.0 / 12.0)
     f0 = 440.0
-    fn = freqList / f0
+    fn = freqListFiltered / f0
     notes = num.log(fn) / num.log(a)
     notes = num.round(notes)
     return notes
@@ -81,8 +82,29 @@ def convertToLetterNote(note):
 def fonctionReconnaissance(data):
     x, y = getfftinfo(data, False)
     freqlst = findFreq(x, y)
-    if freqlst.any():
-        return findNote(freqlst)
+    
+    if freqlst != None:
+        notes = findNotes(freqlst)
+        print "FreqList: {0}\nNotes: {1}".format(freqlst, notes)
+        octaves = []
+        res = []
+        
+        for n in notes:
+            oc = 0
+            
+            if n < 0:
+                oc = int((n - 3.0) / 12.0) + 4
+            else:
+                oc = int((n + 9.0) / 12.0) + 4
+            
+            noteres = (int(n) + 10 % 12)
+            if noteres == 0:
+                noteres = 12
+                
+            res.append((noteres, oc))
+        
+        print "Result: {0}\n".format(res)
+        return res
     else:
         return None
 
