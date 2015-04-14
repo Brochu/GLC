@@ -12,7 +12,7 @@ from outputGenerator import outputGenerator
 from baseStreamHandler import baseStreamHandler
 
 DEFAULT_DATA_TYPE = numpy.int16
-DEFAULT_CHUNK_SIZE = 4096
+DEFAULT_CHUNK_SIZE = 11025
 
 class WavStreamHandler(baseStreamHandler):
     def __init__(self, fileName, func = fonctionReconnaissance, outputGen = outputGenerator(), dataType = DEFAULT_DATA_TYPE, chunkSize = DEFAULT_CHUNK_SIZE):
