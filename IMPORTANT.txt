@@ -1,0 +1,4 @@
+Les bon binairies de pyAudio pour Anaconda sont ici:
+    http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
+    
+Si le site est down, godspeed...

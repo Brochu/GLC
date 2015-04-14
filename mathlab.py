@@ -63,7 +63,7 @@ def findFreq(x, y):
         return x[temp]
 
 def findNote(freqList):
-    a = 2 ** (1.0 / 12.0)
+    a = 2.0 ** (1.0 / 12.0)
     f0 = 440.0
     fn = freqList / f0
     notes = num.log(fn) / num.log(a)
