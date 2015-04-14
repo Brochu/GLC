@@ -78,6 +78,14 @@ def convertToLetterNote(note):
     letters = ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"]
     return letters[note % 12]
 
+def fonctionReconnaissance(data):
+    x, y = getfftinfo(data, False)
+    freqlst = findFreq(x, y)
+    if freqlst.any():
+        return findNote(freqlst)
+    else:
+        return None
+
 if __name__ == '__main__':
     # Read sound file
     #sampleRate, signal = wav.read(sys.argv[1])
