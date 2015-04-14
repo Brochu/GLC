@@ -76,7 +76,7 @@ def convertToLetterNote(note):
         return None
         
     note = int(note)
-    letters = ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"]
+    letters = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
     return letters[note % 12]
 
 def fonctionReconnaissance(data):
