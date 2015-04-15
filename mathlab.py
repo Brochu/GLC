@@ -83,7 +83,7 @@ def fonctionReconnaissance(data):
     x, y = getfftinfo(data, False)
     freqlst = findFreq(x, y)
 
-    if freqlst != None:
+    if not freqlst is None:
         notes = findNotes(freqlst)
         octaves = []
         res = []
