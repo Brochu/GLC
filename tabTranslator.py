@@ -10,10 +10,11 @@
 
 import mathlab
 import random # Temporaire
+import util
 
 from baseTranslator import baseTranslator
 
-BUFFER_LENGTH = 8
+BUFFER_LENGTH = 16
 
 SEPARATOR_COUNT = 2 # Should not be < 2
 SEPARATOR_CHAR = '-'
@@ -31,28 +32,74 @@ class tabTranslator(baseTranslator):
         self.mesureSeparatorCount = mesureSeparatorCount
         self.tuning = tuning
         
-        self._initStrings()
+        self._maxStrings = 6
+        self._maxFrets = 24
+        
+        self.guitStrings = self._initStrings()
+        self.noteDictionnary = self._initNoteDictionnary()
     
     def _initStrings(self):
-        self.guitStrings = []
+        """Initialisation of the visual component of the guitar strings on the tab"""
+        guitStrings = []
         
         for i in range(0, 6):
-            self.guitStrings.append(self.tuning[i] + (self.mesureSeparatorChar * self.mesureSeparatorCount) + (self.separatorChar * self.separatorCount))
+            guitStrings.append(self.tuning[i] + (self.mesureSeparatorChar * self.mesureSeparatorCount) + (self.separatorChar * self.separatorCount))
+            
+        return guitStrings
+    
+    def _initNoteDictionnary(self):
+        """Initialise a note dictionnary representing the guitar"""
+        strings = self._maxStrings
+        frets = self._maxFrets
+        dict = [[0 for i in range(frets)] for i in range(strings)]
+        
+        dict[0][0] = (5, 4)     # E 4
+        dict[1][0] = (12, 3)    # B 3
+        dict[2][0] = (8, 3)     # G 3
+        dict[3][0] = (3, 3)     # D 3
+        dict[4][0] = (10, 2)    # A 2
+        dict[5][0] = (5, 2)     # E 2
+        
+        for i in range(strings):
+            for j in range(1, frets):
+                baseNote = dict[i][j - 1]
+                octave = baseNote[1]
+                note = baseNote[0] + 1
+                
+                if baseNote[0] + 1 > 12:
+                    octave += 1
+                    note = 0
+                
+                dict[i][j] = (note, octave)
+        
+        return dict
     
     def _getNotePositionOnGuitar(self, note):
-        """Oh boy, ca en sera pas une facile ca...
-            Retourne un tuple (Corde, Frette)"""
+        """Retourne un tuple (Corde, Frette)"""
         
+        """
         # C'est temporaire pour tester l'output du translator
         if random.randint(1, 100) >= 100:
             return (random.randint(5, 6), random.randint(12, 15))
         else:
             return (random.randint(5, 6), random.randint(0, 3))
+        """
+        
+        strings = self._maxStrings
+        frets = self._maxFrets
+        
+        for i in range(frets):
+            for j in range(strings):
+                if self.noteDictionnary[j][i] == note:
+                    return (j + 1, i)
+                    
+        raise IndexError("Note not on guitar... {0}".format(note))
     
     def _translate(self, note):
         """Can only handle one note at a time right now..."""
         
-        notePos = self._getNotePositionOnGuitar(note)
+        noteNormalized = (note[0], note[1])
+        notePos = self._getNotePositionOnGuitar(noteNormalized)
         
         for i in range(0, 6):
             if notePos[0] == i + 1:
@@ -69,4 +116,8 @@ class tabTranslator(baseTranslator):
             padAmount = (self.bufferMaxSize - self.bufferSize) * (self.separatorCount + 1)
             self.buffer += s + (self.separatorChar * padAmount) + (self.mesureSeparatorChar * self.mesureSeparatorCount) + '\n'
         
-        self._initStrings()
+        self.guitStrings = self._initStrings()
+
+if __name__ == "__main__":
+    tt = tabTranslator()
+    util.printMatrix(tt.noteDictionnary)

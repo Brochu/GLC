@@ -96,7 +96,7 @@ def fonctionReconnaissance(data):
             else:
                 oc = int((n + 9.0) / 12.0) + 4
 
-            noteres = (int(n) + 10 % 12)
+            noteres = ((int(n) + 10) % 12)
             if noteres == 0:
                 noteres = 12
 

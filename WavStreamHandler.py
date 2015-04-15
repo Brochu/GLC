@@ -8,6 +8,8 @@ import wave
 
 from mathlab import fonctionReconnaissance
 from outputGenerator import outputGenerator
+from tabTranslator import tabTranslator
+from simpleTranslator import simpleTranslator
 
 from baseStreamHandler import baseStreamHandler
 
@@ -29,12 +31,13 @@ class WavStreamHandler(baseStreamHandler):
             # print numpy.fromstring(readchunk, dtype=self.dataType).tolist()
             self._getCallback()(readchunk)
             readchunk = self.wav.readframes(self.chunkSize)
-
+        
         self.stop()
 
     def stop(self):
+        self.outputGen.translate([(None, None)])
         self.wav.close()
 
 if __name__ == "__main__":
-    test = WavStreamHandler(sys.argv[1])
+    test = WavStreamHandler(sys.argv[1], outputGen = outputGenerator(tabTranslator()))
     test.start()

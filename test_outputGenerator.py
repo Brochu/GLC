@@ -9,7 +9,7 @@ import io
 
 from tabTranslator import tabTranslator
 
-NOTES = [(-1, 2), (0, 2), (1, 2), (2, 2), (3, 2), (None, None), (5, 2)]
+NOTES = [(5, 2), (1, 3), (2, 3), (2, 5), (3, 4), (None, None), (5, 2)]
 
 def translateBaseNotes(notes):
     res = []
